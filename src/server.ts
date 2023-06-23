@@ -1,14 +1,17 @@
-import fastify from "fastify";
+import fastify from 'fastify'
+import { mealsRoutes } from './routes/meals'
 
 const app = fastify()
 
-app.get('/meals', async () => {
-  console.log('You are on /meals')
-})
+app
+  .register(mealsRoutes, {
+    prefix: '/meals',
+  })
 
-.listen({
-  path: 'http://localhost',
-  port: 3333
-}) .then(()=>{
-  console.log('HTTP Server Running...')
-})
+  .listen({
+    path: 'http://localhost',
+    port: 3333,
+  })
+  .then(() => {
+    console.log('HTTP Server Running...')
+  })
