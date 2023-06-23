@@ -41,4 +41,34 @@ describe('Meals Route testing', () => {
 
     expect.stringContaining('Meal added with sucess!')
   })
+
+  it('should be able to list meals', async () => {
+    const createUserRequest = request(app.server)
+      .get('/meals/create-user')
+      .expect(201)
+
+    const cookie = createUserRequest.get('setCookie')
+
+    request(app.server)
+      .post('/meals')
+      .set('Cookie', cookie)
+      .send({
+        name: 'Janta',
+        description: 'Arroz, feijão, ovos cozidos',
+        on_diet: true,
+      })
+      .expect(201)
+
+    request(app.server).get('/meals').expect(200)
+
+    expect.objectContaining({
+      meals: [
+        {
+          name: 'Janta',
+          description: 'Arroz, feijão, ovos cozidos',
+          on_diet: true,
+        },
+      ],
+    })
+  })
 })
