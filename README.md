@@ -3,7 +3,7 @@
 
 # Requisitos funcionais
 
-  - [] Criar um usuário
+  - [ ] Criar um usuário
   - [] Registrar uma refeição feita com:
         { 
           nome,
