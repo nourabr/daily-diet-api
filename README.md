@@ -1,5 +1,5 @@
 # Daily Diet API
-
+O objetivo deste projeto é criar uma API para um aplicativo de dieta pessoal.  
 
 # Requisitos funcionais
 
