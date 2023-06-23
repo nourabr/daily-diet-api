@@ -57,5 +57,5 @@
         sqlite3
       }
   - [ ] Testes automatizados e2e em todas as rotas
-  - [ ] Migrations
-  - [ ] Variáveis de ambiente
+  - [x] Migrations
+  - [x] Variáveis de ambiente
