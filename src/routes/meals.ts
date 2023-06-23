@@ -25,7 +25,7 @@ export async function mealsRoutes(app: FastifyInstance) {
     return reply.status(statusCode).send(feedback)
   })
 
-  app.get('/', async (request, reply) => {
+  app.get('/test', async (request, reply) => {
     const result = await knex('meals').select()
 
     return result
