@@ -3,7 +3,7 @@
 
 # Requisitos funcionais
 
-  - [ ] Criar um usuário
+  - [x] Criar um usuário
   - [ ] Registrar uma refeição feita com:
         { 
           nome,
@@ -15,8 +15,7 @@
   - [ ] Apagar uma refeição
   - [ ] Listar todas refeições
   - [ ] Visualizar uma única refeição
-  - [ ] Recuperar métrica do usuário com: 
-        {
+  - [ ] Recuperar métricas do usuário com {
           total de refeições,
           refeições dentro da dieta,
           fora,
@@ -34,17 +33,16 @@
 
 # Requisitos técnicos (não funcionais)
 
-  - [ ] Fazer o deploy com o render.com
-  - [ ] Dependencias globais 
-      {
+  - [x] Migrations
+  - [x] Variáveis de ambiente
+  - [x] Dependencias globais {
         fastify, @fastify/cookie,
         knex,
         dotenv,
         pg,
         zod
-      }
-  - [ ] Dependencias de desenvolvimento
-      {
+      } 
+  - [x] Dependencias de desenvolvimento {
         @rocketseat/eslint-config,
         @types/node,
         @types/supertest,
@@ -57,5 +55,6 @@
         sqlite3
       }
   - [ ] Testes automatizados e2e em todas as rotas
-  - [x] Migrations
-  - [x] Variáveis de ambiente
+  - [ ] Fazer o deploy com o render.com
+      
+      
