@@ -4,7 +4,7 @@ O objetivo deste projeto é criar uma API para um aplicativo de dieta pessoal.
 # Requisitos funcionais
 
   - [x] Criar um usuário
-  - [ ] Registrar uma refeição feita com:
+  - [x] Registrar uma refeição feita com:
         { 
           nome,
           descrição,
@@ -13,7 +13,7 @@ O objetivo deste projeto é criar uma API para um aplicativo de dieta pessoal.
         }
   - [ ] Editar uma refeição
   - [ ] Apagar uma refeição
-  - [ ] Listar todas refeições
+  - [x] Listar todas refeições
   - [ ] Visualizar uma única refeição
   - [ ] Recuperar métricas do usuário com {
           total de refeições,
