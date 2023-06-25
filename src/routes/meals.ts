@@ -153,10 +153,10 @@ export async function mealsRoutes(app: FastifyInstance) {
     { preHandler: checkSessionIdExists },
     async (request, reply) => {
       const dietSummarySchema = z.object({
-        total_meals: z.number(),
-        on_diet: z.number(),
-        off_diet: z.number(),
-        best_frequency: z.number(),
+        total_meals: z.string(),
+        on_diet: z.string(),
+        off_diet: z.string(),
+        best_frequency: z.string(),
       })
 
       const { sessionId } = request.cookies
@@ -192,10 +192,10 @@ export async function mealsRoutes(app: FastifyInstance) {
       })
 
       const dietSummary = dietSummarySchema.parse({
-        total_meals: totalMeals[0].value,
-        on_diet: onDiet[0].value,
-        off_diet: offDiet[0].value,
-        best_frequency: Math.max(...frequency),
+        total_meals: totalMeals[0].value.toString(),
+        on_diet: onDiet[0].value.toString(),
+        off_diet: offDiet[0].value.toString(),
+        best_frequency: Math.max(...frequency).toString(),
       })
 
       return reply.send({ dietSummary })

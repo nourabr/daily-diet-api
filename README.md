@@ -15,7 +15,7 @@ O objetivo deste projeto é criar uma API para um aplicativo de dieta pessoal.
   - [x] Apagar uma refeição
   - [x] Listar todas refeições
   - [x] Visualizar uma única refeição
-  - [ ] Recuperar métricas do usuário com {
+  - [x] Recuperar métricas do usuário com {
           total de refeições,
           refeições dentro da dieta,
           fora,
@@ -55,6 +55,6 @@ O objetivo deste projeto é criar uma API para um aplicativo de dieta pessoal.
         sqlite3
       }
   - [x] Testes automatizados e2e em todas as rotas
-  - [ ] Fazer o deploy com o render.com
+  - [x] Fazer o deploy com o render.com
       
       
