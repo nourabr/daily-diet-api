@@ -39,7 +39,7 @@ describe('Meals Route testing', () => {
       .expect(201)
   })
 
-  it.only('should be able to list meals', async () => {
+  it('should be able to list meals', async () => {
     const createUserRequest = await request(app.server)
       .get('/meals/create-user')
       .expect(201)
@@ -56,7 +56,17 @@ describe('Meals Route testing', () => {
       })
       .expect(201)
 
-    await request(app.server).get('/meals').set('Cookie', cookie).expect(200)
+    const listRequest = await request(app.server)
+      .get('/meals')
+      .set('Cookie', cookie)
+      .expect(200)
+
+    expect(listRequest.body.meals).toEqual([
+      expect.objectContaining({
+        name: 'Janta',
+        description: 'Arroz, feijão, ovos cozidos',
+      }),
+    ])
   })
 
   it('should be able to list a meal by id', async () => {
@@ -83,21 +93,17 @@ describe('Meals Route testing', () => {
 
     const { id } = listRequest.body.meals[0]
 
-    await request(app.server)
+    const listByIdRequest = await request(app.server)
       .get(`/meals/${id}`)
       .set('Cookie', cookie)
       .expect(200)
 
-    expect.objectContaining({
-      meals: [
-        {
-          id,
-          name: 'Janta',
-          description: 'Arroz, feijão, ovos cozidos',
-          on_diet: true,
-        },
-      ],
-    })
+    expect(listByIdRequest.body.meal).toEqual(
+      expect.objectContaining({
+        name: 'Janta',
+        description: 'Arroz, feijão, ovos cozidos',
+      }),
+    )
   })
 
   it('should be able to edit a meal', async () => {
@@ -133,17 +139,6 @@ describe('Meals Route testing', () => {
         on_diet: false,
       })
       .expect(201)
-
-    expect.objectContaining({
-      meals: [
-        {
-          id,
-          name: 'Almoço',
-          description: 'Feijoada',
-          on_diet: false,
-        },
-      ],
-    })
   })
 
   it('should be able to delete a meal', async () => {
@@ -174,8 +169,6 @@ describe('Meals Route testing', () => {
       .delete(`/meals/${id}`)
       .set('Cookie', cookie)
       .expect(200)
-
-    expect.stringContaining(`The meal (${id}) has been deleted with success!`)
   })
 
   it('should be able to summary the diet', async () => {
@@ -215,9 +208,18 @@ describe('Meals Route testing', () => {
       })
       .expect(201)
 
-    await request(app.server)
+    const dietSummaryRequest = await request(app.server)
       .get('/meals/summary')
       .set('Cookie', cookie)
       .expect(200)
+
+    expect(dietSummaryRequest.body.dietSummary).toEqual(
+      expect.objectContaining({
+        total_meals: 3,
+        on_diet: 2,
+        off_diet: 1,
+        best_frequency: 2,
+      }),
+    )
   })
 })
