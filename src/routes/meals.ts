@@ -146,4 +146,59 @@ export async function mealsRoutes(app: FastifyInstance) {
       reply.send(`The meal (${id}) has been deleted with success!`)
     },
   )
+
+  // Diet summary
+  app.get(
+    '/summary',
+    { preHandler: checkSessionIdExists },
+    async (request, reply) => {
+      const dietSummarySchema = z.object({
+        total_meals: z.number(),
+        on_diet: z.number(),
+        off_diet: z.number(),
+        best_frequency: z.number(),
+      })
+
+      const { sessionId } = request.cookies
+
+      const totalMeals = await knex('meals')
+        .where('user_id', sessionId)
+        .count('id', { as: 'value' })
+
+      const onDiet = await knex('meals')
+        .where({
+          user_id: sessionId,
+          on_diet: true,
+        })
+        .count('on_diet', { as: 'value' })
+
+      const offDiet = await knex('meals')
+        .where({
+          user_id: sessionId,
+          on_diet: false,
+        })
+        .count('on_diet', { as: 'value' })
+
+      const bestFrequency = await knex('meals')
+        .where('user_id', sessionId)
+        .select('on_diet')
+
+      const frequency: Array<number> = []
+      let tmpFrequency = 0
+
+      bestFrequency.forEach((meal) => {
+        meal.on_diet ? tmpFrequency++ : (tmpFrequency = 0)
+        frequency.push(tmpFrequency)
+      })
+
+      const dietSummary = dietSummarySchema.parse({
+        total_meals: totalMeals[0].value,
+        on_diet: onDiet[0].value,
+        off_diet: offDiet[0].value,
+        best_frequency: Math.max(...frequency),
+      })
+
+      return reply.send(dietSummary)
+    },
+  )
 }

@@ -159,7 +159,7 @@ describe('Meals Route testing', () => {
     })
   })
 
-  it.only('should be able to delete a meal', async () => {
+  it('should be able to delete a meal', async () => {
     const createUserRequest = await request(app.server)
       .get('/meals/create-user')
       .expect(201)
