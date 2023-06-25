@@ -11,10 +11,10 @@ O objetivo deste projeto é criar uma API para um aplicativo de dieta pessoal.
           data,
           dentro da dieta (bool)? 
         }
-  - [ ] Editar uma refeição
+  - [x] Editar uma refeição
   - [ ] Apagar uma refeição
   - [x] Listar todas refeições
-  - [ ] Visualizar uma única refeição
+  - [x] Visualizar uma única refeição
   - [ ] Recuperar métricas do usuário com {
           total de refeições,
           refeições dentro da dieta,
@@ -25,8 +25,8 @@ O objetivo deste projeto é criar uma API para um aplicativo de dieta pessoal.
 
 # Regras de negócio
 
-  - [ ] Deve ser possível identificar o usuário entre as requisições
-  - [ ] O usuário só pode visualizar, editar e apagar as refeições dele 
+  - [x] Deve ser possível identificar o usuário entre as requisições
+  - [x] O usuário só pode visualizar, editar e apagar as refeições dele 
 
 
 

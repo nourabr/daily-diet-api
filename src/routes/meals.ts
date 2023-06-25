@@ -2,7 +2,7 @@
 import { FastifyInstance } from 'fastify'
 import { knex } from '../database'
 import { randomUUID } from 'crypto'
-import { z } from 'zod'
+import { boolean, string, z } from 'zod'
 import { checkSessionIdExists } from '../middleware/checkSessionIdExists'
 
 export async function mealsRoutes(app: FastifyInstance) {
@@ -87,4 +87,39 @@ export async function mealsRoutes(app: FastifyInstance) {
 
     return { meal }
   })
+
+  // Edit a meal
+  app.put(
+    '/:id',
+    { preHandler: checkSessionIdExists },
+    async (request, reply) => {
+      const requestIdSchema = z.object({
+        id: z.string().uuid(),
+      })
+
+      const requestSchema = z.object({
+        name: string(),
+        description: string(),
+        on_diet: boolean(),
+      })
+
+      const { id } = requestIdSchema.parse(request.params)
+      const { name, description, on_diet } = requestSchema.parse(request.body)
+
+      const { sessionId } = request.cookies
+
+      await knex('meals')
+        .where({
+          user_id: sessionId,
+          id,
+        })
+        .update({
+          name,
+          description,
+          on_diet,
+        })
+
+      return reply.status(201).send('Meal updated with success!')
+    },
+  )
 }
