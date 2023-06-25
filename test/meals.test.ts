@@ -2,7 +2,6 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import { app } from '../src/app'
 import request from 'supertest'
 import { execSync } from 'child_process'
-import { number } from 'zod'
 
 describe('Meals Route testing', () => {
   beforeAll(() => {
@@ -19,18 +18,17 @@ describe('Meals Route testing', () => {
   })
 
   it('should be able to create a user', async () => {
-    request(app.server).get('/meals/create-user').expect(201)
-    request(app.server).get('/meals/create-user').expect(200)
+    await request(app.server).get('/meals/create-user').expect(201)
   })
 
   it('should be able to add a meal', async () => {
-    const createUserRequest = request(app.server)
+    const createUserRequest = await request(app.server)
       .get('/meals/create-user')
       .expect(201)
 
-    const cookie = createUserRequest.get('setCookie')
+    const cookie = createUserRequest.get('Set-Cookie')
 
-    request(app.server)
+    await request(app.server)
       .post('/meals')
       .set('Cookie', cookie)
       .send({
@@ -39,18 +37,16 @@ describe('Meals Route testing', () => {
         on_diet: true,
       })
       .expect(201)
-
-    expect.stringContaining('Meal added with sucess!')
   })
 
-  it('should be able to list meals', async () => {
-    const createUserRequest = request(app.server)
+  it.only('should be able to list meals', async () => {
+    const createUserRequest = await request(app.server)
       .get('/meals/create-user')
       .expect(201)
 
-    const cookie = createUserRequest.get('setCookie')
+    const cookie = createUserRequest.get('Set-Cookie')
 
-    request(app.server)
+    await request(app.server)
       .post('/meals')
       .set('Cookie', cookie)
       .send({
@@ -60,17 +56,7 @@ describe('Meals Route testing', () => {
       })
       .expect(201)
 
-    request(app.server).get('/meals').expect(200)
-
-    expect.objectContaining({
-      meals: [
-        {
-          name: 'Janta',
-          description: 'Arroz, feijão, ovos cozidos',
-          on_diet: true,
-        },
-      ],
-    })
+    await request(app.server).get('/meals').set('Cookie', cookie).expect(200)
   })
 
   it('should be able to list a meal by id', async () => {
