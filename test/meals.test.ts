@@ -2,6 +2,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import { app } from '../src/app'
 import request from 'supertest'
 import { execSync } from 'child_process'
+import { number } from 'zod'
 
 describe('Meals Route testing', () => {
   beforeAll(() => {
@@ -189,5 +190,48 @@ describe('Meals Route testing', () => {
       .expect(200)
 
     expect.stringContaining(`The meal (${id}) has been deleted with success!`)
+  })
+
+  it('should be able to summary the diet', async () => {
+    const createUserRequest = await request(app.server)
+      .get('/meals/create-user')
+      .expect(201)
+
+    const cookie = createUserRequest.get('Set-Cookie')
+
+    await request(app.server)
+      .post('/meals')
+      .set('Cookie', cookie)
+      .send({
+        name: 'Almoço',
+        description: 'Arroz, feijão, carne cozida',
+        on_diet: true,
+      })
+      .expect(201)
+
+    await request(app.server)
+      .post('/meals')
+      .set('Cookie', cookie)
+      .send({
+        name: 'Janta',
+        description: 'Arroz, feijão, ovos cozidos',
+        on_diet: true,
+      })
+      .expect(201)
+
+    await request(app.server)
+      .post('/meals')
+      .set('Cookie', cookie)
+      .send({
+        name: 'Sorvete',
+        description: '5 bolas com cobertura extra',
+        on_diet: false,
+      })
+      .expect(201)
+
+    await request(app.server)
+      .get('/meals/summary')
+      .set('Cookie', cookie)
+      .expect(200)
   })
 })

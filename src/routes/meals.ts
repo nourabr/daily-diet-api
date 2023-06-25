@@ -198,7 +198,7 @@ export async function mealsRoutes(app: FastifyInstance) {
         best_frequency: Math.max(...frequency),
       })
 
-      return reply.send(dietSummary)
+      return reply.send({ dietSummary })
     },
   )
 }
