@@ -12,7 +12,7 @@ O objetivo deste projeto é criar uma API para um aplicativo de dieta pessoal.
           dentro da dieta (bool)? 
         }
   - [x] Editar uma refeição
-  - [ ] Apagar uma refeição
+  - [x] Apagar uma refeição
   - [x] Listar todas refeições
   - [x] Visualizar uma única refeição
   - [ ] Recuperar métricas do usuário com {
@@ -54,7 +54,7 @@ O objetivo deste projeto é criar uma API para um aplicativo de dieta pessoal.
         vitest,
         sqlite3
       }
-  - [ ] Testes automatizados e2e em todas as rotas
+  - [x] Testes automatizados e2e em todas as rotas
   - [ ] Fazer o deploy com o render.com
       
       
