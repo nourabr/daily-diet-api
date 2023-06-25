@@ -113,7 +113,7 @@ describe('Meals Route testing', () => {
     })
   })
 
-  it.only('should be able to edit a meal', async () => {
+  it('should be able to edit a meal', async () => {
     const createUserRequest = await request(app.server)
       .get('/meals/create-user')
       .expect(201)
@@ -157,5 +157,37 @@ describe('Meals Route testing', () => {
         },
       ],
     })
+  })
+
+  it.only('should be able to delete a meal', async () => {
+    const createUserRequest = await request(app.server)
+      .get('/meals/create-user')
+      .expect(201)
+
+    const cookie = createUserRequest.get('Set-Cookie')
+
+    await request(app.server)
+      .post('/meals')
+      .set('Cookie', cookie)
+      .send({
+        name: 'Janta',
+        description: 'Arroz, feijão, ovos cozidos',
+        on_diet: true,
+      })
+      .expect(201)
+
+    const listRequest = await request(app.server)
+      .get('/meals')
+      .set('Cookie', cookie)
+      .expect(200)
+
+    const { id } = listRequest.body.meals[0]
+
+    await request(app.server)
+      .delete(`/meals/${id}`)
+      .set('Cookie', cookie)
+      .expect(200)
+
+    expect.stringContaining(`The meal (${id}) has been deleted with success!`)
   })
 })
