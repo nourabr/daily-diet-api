@@ -108,7 +108,7 @@ export async function mealsRoutes(app: FastifyInstance) {
 
       const { sessionId } = request.cookies
 
-      await knex('meals')
+      const updateRequest = await knex('meals')
         .where({
           user_id: sessionId,
           id,
@@ -119,7 +119,9 @@ export async function mealsRoutes(app: FastifyInstance) {
           on_diet,
         })
 
-      return reply.status(201).send('Meal updated with success!')
+      updateRequest
+        ? reply.status(201).send('Meal updated with success!')
+        : reply.status(404).send()
     },
   )
 
@@ -136,14 +138,16 @@ export async function mealsRoutes(app: FastifyInstance) {
 
       const { sessionId } = request.cookies
 
-      await knex('meals')
+      const deleteRequest = await knex('meals')
         .where({
           user_id: sessionId,
           id,
         })
         .del()
 
-      reply.send(`The meal (${id}) has been deleted with success!`)
+      deleteRequest
+        ? reply.send(`The meal (${id}) has been deleted with success!`)
+        : reply.status(404).send()
     },
   )
 
