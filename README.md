@@ -2,13 +2,13 @@
 O objetivo deste projeto é criar uma API para um aplicativo de dieta pessoal.
 
 # Tecnologias utilizadas
-Node.js com:
-Fastify (Microframework);
-Knex (Query Builder);
-Vitest & Supertest (Testes automatizados e2e);
-Dotenv (Variáveis de ambiente);
-Zod (Typescript schema);
-tsup (Buildar o projeto).
+- Node.js com:
+- Fastify (Microframework);
+- Knex (Query Builder);
+- Vitest & Supertest (Testes automatizados e2e);
+- Dotenv (Variáveis de ambiente);
+- Zod (Typescript schema);
+- tsup (Buildar o projeto).
 
 
 # Requisitos funcionais
